@@ -1,0 +1,24 @@
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = true
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[log]
+  # level = "DEBUG"
+  filePath = "log/traefik.log"
+[api]
+  # entryPoint = "traefik"
+  insecure = true
+  dashboard = true
+[ping]
+[providers.docker]
+[providers]
+  [providers.file]
+    filename = "/etc/traefik/servers.toml"
+    watch = false

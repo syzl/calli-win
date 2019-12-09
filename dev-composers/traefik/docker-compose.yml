@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    # The official v2.0 Traefik docker image
+    image: traefik:v2.0
+    restart: always
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - ./certs:/certs
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./servers.toml:/etc/traefik/servers.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./log:/log
+    # labels:
+      # - "traefik.http.middlewares.auth.basicauth.users=idoz:$$apr1$$DfwYbW.8$$bnx1XrbhOV8bFXDJIzPzb0,songlairui:$$apr1$$BmyPePy8$$2tyol0My/XEpNCSkyqAmT/"
+      # - "traefik.http.routers.api.rule=(PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      # - "traefik.http.routers.api.service=api@internal"
+      # - "traefik.http.routers.api.middlewares=auth"
+
+networks:
+  default:
+    external:
+      name: calli

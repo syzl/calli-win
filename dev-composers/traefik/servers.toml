@@ -1,0 +1,16 @@
+[http]
+  [http.routers]
+    [http.routers.dashboard]
+        rule = "Host(`traefik.de.v`)"
+        service = "traefik-dashboard"
+
+  [http.services]
+      [http.services.traefik-dashboard]
+        [http.services.traefik-dashboard.loadBalancer]
+          [[http.services.traefik-dashboard.loadBalancer.servers]]
+            url = "http://127.0.0.1:8080/"
+[tls.stores]
+  [tls.stores.default]
+    [tls.stores.default.defaultCertificate]
+      certFile = "/certs/dev.crt"
+      keyFile = "/certs/dev.key"
