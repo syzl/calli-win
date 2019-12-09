@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  calli-web:
+    image: registry.cn-zhangjiakou.aliyuncs.com/rv/calli-web:flow
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    restart: always
+    labels:
+      - "traefik.http.routers.calli-web.rule=Host(`calli.de.v`)"
+      - "traefik.http.routers.calli-web.tls=true"
+      # - "traefik.http.routers.calli-web.tls.certResolver=sample"
+      # - "traefik.http.routers.calli-web.middlewares=redirect@file"
+
+networks:
+  default:
+    external:
+      name: calli
+

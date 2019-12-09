@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  calli-serv:
+    image: registry.cn-zhangjiakou.aliyuncs.com/rv/calli:flow
+    restart: always
+    volumes:
+      - ./_static:/usr/local/calli-api/_static
+      # - ./.env.local:/usr/local/calli-api/.env
+    ports:
+      - 3003:3003
+    env_file:
+      - .env
+    command: node ./dist/main.js
+    labels:
+      - "traefik.http.routers.calli-serv.rule=Host(`calli.de.v`) && (PathPrefix(`/api`) || PathPrefix(`/graphql`) || PathPrefix(`/_uploads`))"
+      - "traefik.http.routers.calli-serv.tls=true"
+      # - "traefik.http.routers.calli-serv.tls.certResolver=sample"
+      # - "traefik.http.routers.calli-serv.middlewares=redirect@file"
+
+networks:
+  default:
+    external:
+      name: calli
