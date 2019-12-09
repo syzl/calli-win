@@ -1,0 +1,6 @@
+[submodule "writing-serv"]
+	path = writing-serv
+	url = git@github.com:songlairui/writing-serv.git
+[submodule "calligraphy-classroom"]
+	path = calligraphy-classroom
+	url = https://github.com/syzl/calligraphy-classroom.git
